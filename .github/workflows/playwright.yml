@@ -1,5 +1,7 @@
 name: Playwright Tests
 on:
+  workflow_dispatch:
+
   push:
     branches: [ main, master ]
   pull_request:
@@ -8,6 +10,8 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    env:
+      BASE_URL: ${{ vars.BASE_URL }}
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-node@v4

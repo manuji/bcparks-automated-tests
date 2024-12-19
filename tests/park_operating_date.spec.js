@@ -3,17 +3,16 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Park Operating Date tests', ()=>{
 
-    const baseURL = 'https://bcparks.ca/';
 
     test.beforeEach(async ({page})=>{
-        await page.goto(baseURL);
+        await page.goto('/');
     });
 
 test('Navigate to the Park Operating page via mega menu', async ({page})=>{
    await page.waitForLoadState('networkidle');        
    await page.getByRole('menuitem', { name: 'Plan your trip' }).click();
    await page.getByRole('menuitem', { name: 'Park operating dates'}).click();
-   await expect(page).toHaveURL(baseURL + 'plan-your-trip/park-operating-dates/');
+   await expect(page).toHaveURL('/plan-your-trip/park-operating-dates/');
    await expect(page).toHaveTitle('Park operating dates | BC Parks');
 });
 
@@ -23,10 +22,10 @@ test('Check the breadcrumbs displayed', async ({page})=>{
     await page.waitForLoadState('networkidle');        
     await expect (page.locator('#main-content')).toBeVisible();
     await page.getByRole('link', { name: 'Home' }).click();
-    await expect(page).toHaveURL(baseURL);
+    await expect(page).toHaveURL('/');
     await page.goBack();
     await page.getByRole('link', { name: 'Plan your trip' }).click();
-    await expect(page).toHaveURL(baseURL + 'plan-your-trip/');
+    await expect(page).toHaveURL('/plan-your-trip/');
     await page.goBack();
     await expect(page.getByLabel('breadcrumb').getByText('Park operating dates')).toBeVisible();
 });
@@ -82,7 +81,7 @@ test('Verify the hyperlinks on the page are working', async ({page})=>{
     await page.getByRole('menuitem', { name: 'Park operating dates' }).click();
     await page.waitForLoadState('networkidle');          
     await page.getByRole('link', { name: 'active advisories' }).click();
-    await expect(page).toHaveURL(baseURL + 'active-advisories/');
+    await expect(page).toHaveURL('/active-advisories/');
     await page.goBack();
 });
 
@@ -101,7 +100,7 @@ test('Check the park links are working and redirect to the correct site', async(
     // Check if the text includes 'Check the park'
         if (text.includes('Check the park')) {
             await link.click();
-            await expect(page).toHaveURL(baseURL + 'find-a-park/'); 
+            await expect(page).toHaveURL( '/find-a-park/'); 
             await page.goBack();
         }
     

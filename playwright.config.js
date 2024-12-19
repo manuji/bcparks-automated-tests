@@ -1,5 +1,13 @@
 // @ts-check
-const { defineConfig, devices } = require('@playwright/test');
+import { config as dotenvConfig } from 'dotenv';
+import { defineConfig, devices } from '@playwright/test';
+
+
+dotenvConfig();
+
+
+
+
 
 /**
  * Read environment variables from file.
@@ -10,7 +18,7 @@ const { defineConfig, devices } = require('@playwright/test');
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
-module.exports = defineConfig({
+const config  = defineConfig({
   testDir: './tests',
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -24,6 +32,7 @@ module.exports = defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
+    baseURL: process.env.BASE_URL,
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
 
@@ -77,3 +86,4 @@ module.exports = defineConfig({
   // },
 });
 
+export default config;

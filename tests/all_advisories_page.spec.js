@@ -2,13 +2,13 @@ import { test, expect } from '@playwright/test';
 
 test.describe('All advisories page tests', ()=>{
 
-    const baseURL = 'https://bcparks.ca/';
-    const activeAdvisoriesURL = 'https://bcparks.ca/active-advisories/';
+    
+    const activeAdvisoriesURL = '/active-advisories/';
     // const { chromium } = require('@playwright/test');
     const customTimeout = 90000;
 
     test.beforeEach(async ({page})=>{
-        await page.goto(baseURL);
+        await page.goto('/');
     });
 
     test('Navigate to active advisories page', async ({page})=>{

@@ -2,11 +2,11 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Approved management plan tests', ()=>{
 
-    const baseURL = 'https://bcparks.ca/';
-    const approvedManagementPlanURL = 'https://bcparks.ca/about/management-plans/approved/';
+
+    const approvedManagementPlanURL = '/about/management-plans/approved/';
     
     test.beforeEach(async ({page})=>{
-        await page.goto(baseURL);   
+        await page.goto('/');   
     });
     
     test('Check that we can get to the page from homepage', async ({page})=>{
