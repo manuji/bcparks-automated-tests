@@ -8,13 +8,13 @@ test.describe('All advisories page tests', ()=>{
     const customTimeout = 90000;
 
     test.beforeEach(async ({page})=>{
-        await page.goto('/');
+        await page.goto(process.env.BASE_URL);
     });
 
     test('Navigate to active advisories page', async ({page})=>{
         await page.waitForLoadState('networkidle');
         await page.getByText('See all advisories').click();
-        await expect(page).toHaveURL('/active-advisories/');
+        await expect(page).toHaveURL(process.env.BASE_URL+'/active-advisories/');
         await expect(page).toHaveTitle('Active advisories | BC Parks');
     });
 
