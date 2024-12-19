@@ -14,7 +14,7 @@ test.describe('All advisories page tests', ()=>{
     test('Navigate to active advisories page', async ({page})=>{
         await page.waitForLoadState('networkidle');
         await page.getByText('See all advisories').click();
-        await expect(page).toHaveURL(baseURL + 'active-advisories/');
+        await expect(page).toHaveURL('/active-advisories/');
         await expect(page).toHaveTitle('Active advisories | BC Parks');
     });
 
@@ -23,7 +23,7 @@ test.describe('All advisories page tests', ()=>{
         await page.waitForLoadState('networkidle');
         await expect(page.getByRole('link', { name: 'Home'})).toBeVisible();
         await page.getByRole('link', {name: 'Home'}).click();
-        await expect(page).toHaveURL(baseURL);
+        await expect(page).toHaveURL('/');
     });
 
     test('Verify the h1 is visible', async ({page}) =>{
