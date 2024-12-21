@@ -8,32 +8,32 @@ test.describe('All advisories page tests', ()=>{
     const customTimeout = 90000;
 
     test.beforeEach(async ({page})=>{
-        await page.goto(process.env.BASE_URL);
+        await page.goto(process.env.URL);
     });
 
     test('Navigate to active advisories page', async ({page})=>{
         await page.waitForLoadState('networkidle');
         await page.getByText('See all advisories').click();
-        await expect(page).toHaveURL(process.env.BASE_URL+'/active-advisories/');
+        await expect(page).toHaveURL(`${process.env.URL}${activeAdvisoriesURL}`);
         await expect(page).toHaveTitle('Active advisories | BC Parks');
     });
 
     test('Verify the breadcrumbs are visible and working', async ({page})=>{
-        await page.goto(activeAdvisoriesURL);
+        await page.goto(`${process.env.URL}${activeAdvisoriesURL}`);
         await page.waitForLoadState('networkidle');
         await expect(page.getByRole('link', { name: 'Home'})).toBeVisible();
-        await page.getByRole('link', {name: 'Home'}).click();
-        await expect(page).toHaveURL('/');
+        await page.getByRole('link', {name: 'Home'});
+        await expect(page).toHaveURL(`${process.env.URL}${activeAdvisoriesURL}`);
     });
 
     test('Verify the h1 is visible', async ({page}) =>{
-        await page.goto(activeAdvisoriesURL);
+        await page.goto(`${process.env.URL}${activeAdvisoriesURL}`);
         await page.waitForLoadState('networkidle');
         await expect(page.locator('h1', {name : 'Active advisories'})).toBeVisible();
     });
 
     test('Verify the Event search is working', async ({page}) =>{
-        await page.goto(activeAdvisoriesURL);
+        await page.goto(`${process.env.URL}${activeAdvisoriesURL}`);
         await page.waitForLoadState('networkidle');
         await page.getByLabel('Select a type').click();
         await page.getByLabel('Select a type').fill('Avalanche', { customTimeout });
@@ -49,7 +49,7 @@ test.describe('All advisories page tests', ()=>{
     });
 
     test('Verify the search filters are working', async ({page})=>{
-        await page.goto(activeAdvisoriesURL);
+        await page.goto(`${process.env.URL}${activeAdvisoriesURL}`);
         await page.waitForLoadState('networkidle');
         await page.getByRole('checkbox').nth(1).check();
         await page.getByRole('textbox', {name : 'Search'}).fill('Babine');
@@ -57,13 +57,13 @@ test.describe('All advisories page tests', ()=>{
     });
 
     test('Verify the park safety advisories legend is visible', async ({page}) =>{
-        await page.goto(activeAdvisoriesURL);
+        await page.goto(`${process.env.URL}${activeAdvisoriesURL}`);
         await page.waitForLoadState('networkidle');
         const highAdvisoryLegendItem = page.locator('.advisory-legend-item').first();
         const mediumAdvisoryLegendItem = page.locator('.advisory-legend-item').nth(1);
         const lowAdvisoryLegendItem = page.locator('.advisory-legend-item').nth(2);
 
-        await page.goto(activeAdvisoriesURL);
+        await page.goto(`${process.env.URL}${activeAdvisoriesURL}`);
         await page.waitForLoadState('networkidle');
         await expect(highAdvisoryLegendItem).toBeVisible();
         await expect(highAdvisoryLegendItem).toHaveText('HighImmediate danger and closures');
@@ -74,7 +74,7 @@ test.describe('All advisories page tests', ()=>{
     });
 
     test('Check that all links redirect to the correct pages', async ({page}) =>{
-        await page.goto(activeAdvisoriesURL);
+        await page.goto(`${process.env.URL}${activeAdvisoriesURL}`);
         await page.waitForLoadState('networkidle');
         await page.getByRole('link', { name: 'BC Wildfire Service', exact: true }).click();
         await expect(page).toHaveURL('https://www2.gov.bc.ca/gov/content/safety/wildfire-status');

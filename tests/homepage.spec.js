@@ -3,17 +3,15 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Home page tests', ()=>{
 
-    
-
     test.beforeEach(async ({page})=>{
-        await page.goto('/', { timeout: 90000 });
+        await page.goto(process.env.URL, { timeout: 90000 });
     })
 
     // Check that user can reach the home page
     test('Check that the page has connected', async ({page}) =>{
         await page.waitForLoadState('networkidle');
         await expect(page).toHaveTitle('Home | BC Parks');
-        await expect(page).toHaveURL('/');
+        await expect(page).toHaveURL(process.env.URL);
     });
 
     // Checks the section headings on the home page
@@ -43,7 +41,7 @@ test.describe('Home page tests', ()=>{
         await page.getByLabel('By park name').fill('Garibaldi');
         await expect(page.getByLabel('Garibaldi Park')).toBeVisible();
         await page.getByLabel('Garibaldi Park').click();
-        await expect(page).toHaveURL('/find-a-park/?q=Garibaldi%20Park');
+        await expect(page).toHaveURL(`${process.env.URL}/find-a-park/?q=Garibaldi%20Park`);
     });
 
     // Checks the city suggestion dropdown menu and redirect to Find a park page
@@ -56,7 +54,7 @@ test.describe('Home page tests', ()=>{
         await expect(page.getByRole('option', { name: 'Burnaby'})).toBeVisible();
         await page.getByLabel('Near a city').fill('Bur');
         await page.getByRole('option', { name: 'Burnaby'}).click();
-        await expect(page).toHaveURL('/find-a-park/?l=268');
+        await expect(page).toHaveURL(`${process.env.URL}/find-a-park/?l=268`);
     });
 
     // Checks the park search button redirects to the Find a park page
@@ -64,7 +62,7 @@ test.describe('Home page tests', ()=>{
         await page.waitForLoadState('networkidle');
         await page.getByLabel('By park name').fill('Garibaldi');
         await page.getByRole('button', {name: 'Search'}).click();
-        await expect(page).toHaveURL('/find-a-park/?q=Garibaldi');
+        await expect(page).toHaveURL(`${process.env.URL}/find-a-park/?q=Garibaldi`);
         await expect(page).toHaveTitle('Find a park | BC Parks');
     });
 
@@ -72,22 +70,22 @@ test.describe('Home page tests', ()=>{
     test('Search for a park with no search terms', async ({page})=>{
         await page.waitForLoadState('networkidle');
         await page.getByRole('button', { name: 'Search'}).click();
-        await expect(page).toHaveURL('/find-a-park/');
+        await expect(page).toHaveURL(`${process.env.URL}/find-a-park/`);
     });
 
     // Checks the advisory links can redirect to the corresponding advisory page
     test('Check that the redirect advisory links are working', async ({page})=>{
         await page.waitForLoadState('networkidle');
         await page.getByRole('link', { name: 'See flood advisories'}).click();
-        await expect(page).toHaveURL('/active-advisories/?type=Flood');
+        await expect(page).toHaveURL(`${process.env.URL}/active-advisories/?type=Flood`);
         await expect(page).toHaveTitle('Active advisories | BC Parks');
         await page.goBack();
         await page.getByRole('link', { name: 'See wildfire advisories'}).click();
-        await expect(page).toHaveURL('/active-advisories/?type=Wildfire');
+        await expect(page).toHaveURL(`${process.env.URL}/active-advisories/?type=Wildfire`);
         await expect(page).toHaveTitle('Active advisories | BC Parks');
         await page.goBack();
         await page.getByRole('link', { name: 'See all advisories'}).click();
-        await expect(page).toHaveURL('/active-advisories/');
+        await expect(page).toHaveURL(`${process.env.URL}/active-advisories/`);
         await expect(page).toHaveTitle('Active advisories | BC Parks');
     });
 
@@ -95,12 +93,12 @@ test.describe('Home page tests', ()=>{
     test('Check that the redirect New to BC Parks links are working', async ({page})=>{
         await page.waitForLoadState('networkidle');
         await page.getByRole('link', { name: 'Campers sitting near a tent' }).click();
-        await expect(page).toHaveURL('/reservations/');
+        await expect(page).toHaveURL(`${process.env.URL}/reservations/`);
         await expect(page).toHaveTitle('Reservations - Province of British Columbia | BC Parks');
         await page.goBack();
         await page.waitForLoadState('networkidle');
         await page.getByRole('link', { name: 'People taking a photo' }).click();
-        await expect(page).toHaveURL( '/plan-your-trip/things-to-do/');
+        await expect(page).toHaveURL(`${process.env.URL}/plan-your-trip/things-to-do/`);
         await expect(page).toHaveTitle('Things to do - Province of British Columbia | BC Parks');
         await page.goBack();
         await page.waitForLoadState('networkidle');
@@ -110,7 +108,7 @@ test.describe('Home page tests', ()=>{
         await page.goBack();
         await page.waitForLoadState('networkidle');
         await page.getByRole('link', { name: 'Cleaning up after a dog Visit' }).click();
-        await expect(page).toHaveURL( '/plan-your-trip/visit-responsibly/');
+        await expect(page).toHaveURL(`${process.env.URL}/plan-your-trip/visit-responsibly/`);
         await expect(page).toHaveTitle('Visit responsibly - Province of British Columbia | BC Parks');
     });
 
@@ -118,22 +116,22 @@ test.describe('Home page tests', ()=>{
     test('Check that the redirect About BC Parks links are working', async ({page})=>{
         await page.waitForLoadState('networkidle');
         await page.getByRole('link', { name: 'An indigenous carving' }).click();
-        await expect(page).toHaveURL('/about/indigenous-relations-reconciliation/');
+        await expect(page).toHaveURL(`${process.env.URL}/about/indigenous-relations-reconciliation/`);
         await expect(page).toHaveTitle('Indigenous relations and reconciliation  - Province of British Columbia | BC Parks');
         await page.goBack();
         await page.waitForLoadState('networkidle');
         await page.getByRole('link', { name: 'A Bighorn Sheep Wildlife'}).click();
-        await expect(page).toHaveURL('/plan-your-trip/visit-responsibly/wildlife-safety/');
+        await expect(page).toHaveURL(`${process.env.URL}/plan-your-trip/visit-responsibly/wildlife-safety/`);
         await expect(page).toHaveTitle('Wildlife safety - Province of British Columbia | BC Parks');
         await page.goBack();
         await page.waitForLoadState('networkidle');
         await page.getByRole('link', { name: 'A mountain peak Conservation' }).click();
-        await expect(page).toHaveURL('/conservation/');
+        await expect(page).toHaveURL(`${process.env.URL}/conservation/`);
         await expect(page).toHaveTitle('Conservation - Province of British Columbia | BC Parks');
         await page.goBack();
         await page.waitForLoadState('networkidle');
         await page.getByRole('link', { name: 'People holding license plates' }).click();
-        await expect(page).toHaveURL('/get-involved/');
+        await expect(page).toHaveURL(`${process.env.URL}/get-involved/`);
         await expect(page).toHaveTitle('Get involved - Province of British Columbia | BC Parks');
     });
 

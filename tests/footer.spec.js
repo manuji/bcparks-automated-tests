@@ -2,10 +2,8 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Footer tests', ()=>{
 
-   
-
     test.beforeEach(async ({page})=>{
-        await page.goto('/');
+        await page.goto(process.env.URL);
         await page.waitForLoadState('domcontentloaded');        
     });
 
@@ -17,7 +15,7 @@ test.describe('Footer tests', ()=>{
         await page.getByRole('menuitem', { name: 'Contact' }).click();
         await expect(page.getByRole('link', { name: 'BC Parks Wordmark' })).toBeVisible();
         await page.getByRole('link', { name: 'BC Parks Wordmark' }).click();
-        await expect(page).toHaveURL('/');
+        await expect(page).toHaveURL(process.env.URL);
     })
 
     test('Check the heading on the footer is visible', async ({page}) =>{
@@ -28,32 +26,32 @@ test.describe('Footer tests', ()=>{
 
     test('Check the links on the footer are visible and are working', async ({page}) =>{
         await page.locator('#home-footer').getByText('Park-use permits').click();
-        await expect(page).toHaveURL('/park-use-permits/');
+        await expect(page).toHaveURL(`${process.env.URL}/park-use-permits/`);
         await page.goBack();
-        await expect(page).toHaveURL('/');
+        await expect(page).toHaveURL(process.env.URL);
         await page.locator('#home-footer').getByText('Filming in parks').click();
-        await expect(page).toHaveURL( '/park-use-permits/filming-in-parks/');
+        await expect(page).toHaveURL(`${process.env.URL}/park-use-permits/filming-in-parks/`);
         await page.goBack();
         await page.locator('#home-footer').getByText('Travel trade').click();
-        await expect(page).toHaveURL('/park-use-permits/travel-trade/');
+        await expect(page).toHaveURL(`${process.env.URL}/park-use-permits/travel-trade/`);
         await page.goBack();
         await page.locator('#home-footer').getByText('Donate').click();
-        await expect(page).toHaveURL('/get-involved/donate/');
+        await expect(page).toHaveURL(`${process.env.URL}/get-involved/donate/`);
         await page.goBack();
         await page.locator('#home-footer').getByText('Buy a licence plate').click();
-        await expect(page).toHaveURL('/get-involved/buy-licence-plate/');
+        await expect(page).toHaveURL(`${process.env.URL}/get-involved/buy-licence-plate/`);
         await page.goBack();
         await page.locator('#home-footer').getByText('Volunteer').click();
-        await expect(page).toHaveURL('/get-involved/volunteer/');
+        await expect(page).toHaveURL(`${process.env.URL}/get-involved/volunteer/`);
         await page.goBack();
         await page.locator('#home-footer').getByText('Contact us').click();
-        await expect(page).toHaveURL('/contact/');
+        await expect(page).toHaveURL(`${process.env.URL}/contact/`);
         await page.goBack();  
         await page.locator('#home-footer').getByText('BC Parks blog').click();
         await expect(page).toHaveURL('https://engage.gov.bc.ca/bcparksblog/');
         await page.goBack();
         await page.getByRole('link', { name: 'Site map' }).click();
-        await expect(page).toHaveURL('/site-map/');
+        await expect(page).toHaveURL(`${process.env.URL}/site-map/`);
         await page.goBack();
         await page.getByRole('link', { name: 'Disclaimer' }).click();
         await expect(page).toHaveURL('https://www2.gov.bc.ca/gov/content/home/disclaimer');
@@ -78,7 +76,7 @@ test.describe('Footer tests', ()=>{
 
         const page = await context.newPage();
 
-        await page.goto('/');
+        await page.goto(process.env.URL);
         await page.getByRole('link', { name: 'Facebook' }).click();
         await expect(page).toHaveURL('https://www.facebook.com/YourBCParks/');
         await page.goBack();
