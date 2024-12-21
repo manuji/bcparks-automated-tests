@@ -5,13 +5,13 @@ test.describe('Find a park page tests', async ()=>{
     const customTimeout = { timeout: 90000 };
 
     test.beforeEach(async ({page})=>{
-        page.goto('/');
+        page.goto(process.env.URL);
     });
 
     test('Go to the find a park page', async ({page})=>{
         await page.waitForLoadState('networkidle');
         await page.getByRole('menuitem', { name: 'Find a park' }, customTimeout).click();
-        await expect(page).toHaveURL('/find-a-park/');
+        await expect(page).toHaveURL(`${process.env.URL}/find-a-park/`);
         await expect(page).toHaveTitle('Find a park | BC Parks');
     });
 
@@ -21,7 +21,7 @@ test.describe('Find a park page tests', async ()=>{
         await page.getByLabel('By park name').fill('joffres');
         await page.getByLabel('Search').click();
         await page.getByRole('link', { name: 'Joffre Lakes Park' }, customTimeout).click();
-        await expect(page).toHaveURL('/joffre-lakes-park/');
+        await expect(page).toHaveURL(`${process.env.URL}/joffre-lakes-park/`);
         await expect(page).toHaveTitle('Joffre Lakes Park | BC Parks');
     });
 
@@ -41,7 +41,7 @@ test.describe('Find a park page tests', async ()=>{
         const dropdownOption = page.getByRole('option', { name: 'Type to search...' });
         await page.getByRole('menuitem', { name: 'Find a park' }).click();
         await page.waitForLoadState('networkidle');
-        await expect(page).toHaveURL("https://bcparks.ca/find-a-park/");
+        await expect(page).toHaveURL(`${process.env.URL}/find-a-park/`);
         await page.getByLabel('By park name').click();
         await expect(page.getByLabel('menu-options')).toBeVisible();
         await expect(dropdownOption).toBeVisible
@@ -51,7 +51,7 @@ test.describe('Find a park page tests', async ()=>{
         const dropdownOption = page.getByRole('option', { name: 'Current location' });
         await page.getByRole('menuitem', { name: 'Find a park' }).click();
         await page.waitForLoadState('networkidle');
-        await expect(page).toHaveURL("https://bcparks.ca/find-a-park/");
+        await expect(page).toHaveURL(`${process.env.URL}/find-a-park/`);
         await page.getByLabel('Near a city').click();
         await expect(page.getByLabel('menu-options')).toBeVisible();
         await expect(dropdownOption).toBeVisible();
@@ -60,7 +60,7 @@ test.describe('Find a park page tests', async ()=>{
     test('Check the suggestion box in search is displayed for park search', async ({page})=>{
         await page.getByRole('menuitem', { name: 'Find a park' }).click();
         await page.waitForLoadState('networkidle');
-        await expect(page).toHaveURL("https://bcparks.ca/find-a-park/");
+        await expect(page).toHaveURL(`${process.env.URL}/find-a-park/`);
         await page.getByLabel('By park name').fill("J")
         await expect(page.getByLabel('menu-options')).toBeVisible();
         await expect(page.getByLabel('menu-options')).toContainText("Jackman Flats Park");
@@ -76,7 +76,7 @@ test.describe('Find a park page tests', async ()=>{
     test('Check the suggestion box in search is displayed for city search', async ({page})=>{
         await page.getByRole('menuitem', { name: 'Find a park' }).click();
         await page.waitForLoadState('networkidle');
-        await expect(page).toHaveURL("https://bcparks.ca/find-a-park/");
+        await expect(page).toHaveURL(`${process.env.URL}/find-a-park/`);
         await page.getByLabel('Near a city').fill("K");
         await expect(page.getByLabel('menu-options')).toBeVisible();
         await expect(page.getByLabel('menu-options')).toContainText("Kamloops");
@@ -93,7 +93,7 @@ test.describe('Find a park page tests', async ()=>{
         // Apply Backcountry camping filter and is visible
         await page.getByRole('menuitem', { name: 'Find a park' }).click();
         await page.waitForLoadState('networkidle');
-        await expect(page).toHaveURL("https://bcparks.ca/find-a-park/");
+        await expect(page).toHaveURL(`${process.env.URL}/find-a-park/`);
         await page.getByLabel('Backcountry camping (266)').click();
         await expect(page.getByLabel('Backcountry camping (266)')).toBeVisible();
         await expect(page.getByText('266', { exact: true })).toBeVisible();
@@ -166,16 +166,16 @@ test.describe('Find a park page tests', async ()=>{
     test('Check the A-Z park list redirects to the correct page', async ({page})=>{
         await page.getByRole('menuitem', { name: 'Find a park' }).click();
         await page.waitForLoadState('networkidle');
-        await expect(page).toHaveURL("https://bcparks.ca/find-a-park/");
+        await expect(page).toHaveURL(`${process.env.URL}/find-a-park/`);
         await page.getByRole('link', { name: 'A–Z park list' }).click();
-        await expect(page).toHaveURL('https://bcparks.ca/find-a-park/a-z-list/');
+        await expect(page).toHaveURL(`${process.env.URL}/find-a-park/a-z-list/`);
     });
 
 
     test('Check each park card', async ({page})=>{
         await page.getByRole('menuitem', { name: 'Find a park' }).click();
         await page.waitForLoadState('networkidle');
-        await expect(page).toHaveURL("https://bcparks.ca/find-a-park/");
+        await expect(page).toHaveURL(`${process.env.URL}/find-a-park/`);
         await expect(page.getByLabel('Load more results')).toBeVisible();
         await page.getByRole('button', { name: 'Load more results' }).click();
         await expect(page.getByText('Anarchist Protected AreaOkanaganOpen').first()).toBeVisible();
