@@ -1,9 +1,12 @@
 // @ts-check
-import { config as dotenvConfig } from 'dotenv';
-import { defineConfig, devices } from '@playwright/test';
+ // import { config as dotenvConfig } from 'dotenv';
+ import { defineConfig, devices } from '@playwright/test';
+ import dotenv from "dotenv";
 
 
-dotenvConfig();
+ dotenv.config({
+  path: `./env/.env.${process.env.ENV}`,
+ });
 
 
 
@@ -32,7 +35,8 @@ const config  = defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    baseURL: process.env.BASE_URL,
+    //baseURL: 'https://bcparks.ca',
+    //baseURL: process.env.BASE_URL,
     /* Base URL to use in actions like `await page.goto('/')`. */
     // baseURL: 'http://127.0.0.1:3000',
 
